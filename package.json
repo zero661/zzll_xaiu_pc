@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8084",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@sentry/vue": "^10.53.1",
+    "@tinymomentum/liquid-glass-vue": "^1.0.9",
     "core-js": "^3.8.3",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.20",
+    "ical.js": "^2.2.1",
+    "jsencrypt": "^3.5.4",
+    "qrcode": "^1.5.4",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -21,11 +28,15 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "axios": "^1.14.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "sass": "^1.99.0",
+    "sass-loader": "^16.0.7",
+    "vant": "^4.9.24"
   },
   "eslintConfig": {
     "root": true,

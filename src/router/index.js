@@ -1,26 +1,77 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: '/',
+    redirect: '/login'
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login.vue'),
+    meta: { showTabbar: false }
   },
-];
+  {
+    path: '/courses',
+    name: 'Courses',
+    component: () => import('@/views/Courses.vue'),
+    meta: { showTabbar: true, requiresAuth: true }
+  },
+  {
+    path: '/homework',
+    name: 'Homework',
+    component: () => import('@/views/Homework.vue'),
+    meta: { showTabbar: true, requiresAuth: true }
+  },
+  {
+    path: '/platform-homework-detail',
+    name: 'PlatformHomeworkDetail',
+    component: () => import('@/views/PlatformHomeworkDetail.vue'),
+    meta: { showTabbar: true, requiresAuth: true }
+  },
+  {
+    path: '/homework-detail',
+    name: 'HomeworkDetail',
+    component: () => import('@/views/HomeworkDetail.vue'),
+    meta: { showTabbar: false, requiresAuth: true }
+  },
+   {
+    path: '/email-binding',
+    name: 'EmailBinding',
+    component: () => import('@/components/EmailBinding.vue'),
+    meta: { showTabbar: false, title: '邮箱绑定' }
+  },
+  {
+    path: '/attendance',
+    name: 'Attendance',
+    component: () => import('@/views/CourseAttendance.vue'),
+    meta: { showTabbar: false, requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/Profile.vue'),
+    meta: { showTabbar: true, requiresAuth: true }
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
-});
+  routes
+})
 
-export default router;
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const token = localStorage.getItem('token')
+  const isLoggedIn = !!token
+
+  if (requiresAuth && !isLoggedIn) {
+    next('/login')
+  } else if (to.path === '/login' && isLoggedIn) {
+    next('/courses')
+  } else {
+    next()
+  }
+})
+
+export default router
